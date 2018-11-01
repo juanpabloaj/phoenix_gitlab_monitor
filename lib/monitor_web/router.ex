@@ -20,7 +20,9 @@ defmodule MonitorWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", MonitorWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", MonitorWeb do
+    pipe_through :api
+
+    post "/", ApiController, :index
+  end
 end
