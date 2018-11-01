@@ -3,9 +3,9 @@
 
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/web/endpoint.ex":
-import {Socket} from "phoenix"
+import { Socket } from 'phoenix'
 
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+let socket = new Socket('/socket', { params: { token: window.userToken } })
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
@@ -54,18 +54,27 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("room:lobby", {})
+let channel = socket.channel('room:lobby', {})
 
 let messagesContainer = document.querySelector('#messages')
 
-channel.on("new_msg", payload => {
-  let messageItem = document.createElement("li")
-  messageItem.innerText = `[${Date()}] ${payload.body}`
+function getPipelineInfo (body) {
+  let name = body.project.name
+  let pipelineId = body.object_attributes.id
+  let branch = body.object_attributes.ref
+  let state = body.object_attributes.status
+  let author = body.commit.author.name
+  return `${name} ${branch} ${pipelineId} ${author} ${state}`
+}
+
+channel.on('new_msg', payload => {
+  let messageItem = document.createElement('li')
+  messageItem.innerText = getPipelineInfo(payload.body)
   messagesContainer.appendChild(messageItem)
 })
 
 channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+  .receive('ok', resp => { console.log('Joined successfully', resp) })
+  .receive('error', resp => { console.log('Unable to join', resp) })
 
 export default socket
