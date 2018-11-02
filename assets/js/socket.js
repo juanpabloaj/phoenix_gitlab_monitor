@@ -71,7 +71,7 @@ function getPipelineInfo (payload) {
 
 let listBy = (id, { metas }) => {
   return {
-    online_at: metas[0].online_at,
+    online_at: new Date(parseInt(metas[0].online_at)),
     projectName: metas[0].name,
     pipelineId: metas[0].pipeline_id,
     branch: metas[0].branch,
@@ -85,7 +85,7 @@ function renderPipelines (presences) {
   let pipelineList = document.querySelector('#pipelines')
   pipelineList.innerHTML = Presence.list(presences, listBy)
     .sort((a, b) => {
-      return new Date(parseInt(b.online_at)) - new Date(parseInt(a.online_at))
+      return b.online_at - a.online_at
     })
     .map(presence => `
       <div class="col-sm-4">
