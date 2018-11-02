@@ -71,9 +71,13 @@ function getPipelineInfo (payload) {
 
 let listBy = (id, { metas }) => {
   return {
-    id: id,
-    status: metas[0].status,
-    online_at: metas[0].online_at
+    online_at: metas[0].online_at,
+    projectName: metas[0].name,
+    pipelineId: metas[0].pipeline_id,
+    branch: metas[0].branch,
+    author: metas[0].author,
+    message: metas[0].message,
+    status: metas[0].status
   }
 }
 
@@ -86,10 +90,12 @@ function renderPipelines (presences) {
     .map(presence => `
       <div class="col-sm-4">
         <div class="card text-white bg-success mb-3">
-          <div class="card-header">${presence.id}</div>
           <div class="card-body">
-            <h5 class="card-title">${presence.id} ${presence.status}</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <h5 class="card-title">${presence.projectName} (${presence.branch})</h5>
+            <p class="card-text">${presence.author}: ${presence.message}</p>
+          </div>
+          <div class="card-footer">
+            #${presence.pipelineId} ${presence.status}
           </div>
         </div>
       </div>
