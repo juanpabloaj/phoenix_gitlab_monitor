@@ -84,9 +84,15 @@ function renderPipelines (presences) {
       return new Date(parseInt(b.online_at)) - new Date(parseInt(a.online_at))
     })
     .map(presence => `
-      <li>
-        ${presence.id} ${presence.status}
-      </li>
+      <div class="col-sm-4">
+        <div class="card text-white bg-success mb-3">
+          <div class="card-header">${presence.id}</div>
+          <div class="card-body">
+            <h5 class="card-title">${presence.id} ${presence.status}</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          </div>
+        </div>
+      </div>
     `)
     .join('')
 }

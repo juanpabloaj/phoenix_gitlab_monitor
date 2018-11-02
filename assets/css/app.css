@@ -1,1 +1,6 @@
 /* This file is for your main application css. */
+
+body {
+  color: #fff;
+  background: #212529;
+}

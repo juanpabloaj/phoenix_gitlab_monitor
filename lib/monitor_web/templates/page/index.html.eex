@@ -1,6 +1,7 @@
 <div class="">
   <h2><%= gettext "Welcome to %{name}!", name: "Phoenix monitor" %></h2>
 
-  <ul id="pipelines"></ul>
+  <div id="pipelines" class="row">
+  </div>
   <div id="messages"></div>
 </div>
