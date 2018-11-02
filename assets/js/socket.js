@@ -114,7 +114,7 @@ channel.on('presence_diff', diff => {
 channel.on('new_msg', payload => {
   let messageItem = document.createElement('li')
   messageItem.innerText = getPipelineInfo(payload)
-  messagesContainer.appendChild(messageItem)
+  // messagesContainer.appendChild(messageItem)
 })
 
 channel.join()

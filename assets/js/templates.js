@@ -1,6 +1,11 @@
 let statusClassTranslator = (status) => {
-  if (status === 'failed') {
-    status = 'danger'
+  switch (status) {
+    case 'failed':
+      status = 'danger'
+      break
+    case 'running':
+      status = 'primary'
+      break
   }
 
   return status
