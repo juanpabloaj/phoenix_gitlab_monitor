@@ -4,6 +4,7 @@
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/web/endpoint.ex":
 import { Socket, Presence } from 'phoenix'
+import timeago from 'timeago.js'
 
 let socket = new Socket('/socket', { params: { token: window.userToken } })
 
@@ -70,8 +71,10 @@ function getPipelineInfo (payload) {
 }
 
 let listBy = (id, { metas }) => {
+  let pipelineDate = new Date(parseInt(metas[0].online_at))
   return {
-    online_at: new Date(parseInt(metas[0].online_at)),
+    online_at: pipelineDate,
+    timeAgo: timeago().format(pipelineDate),
     projectName: metas[0].name,
     pipelineId: metas[0].pipeline_id,
     branch: metas[0].branch,
@@ -95,7 +98,14 @@ function renderPipelines (presences) {
             <p class="card-text">${presence.author}: ${presence.message}</p>
           </div>
           <div class="card-footer">
-            #${presence.pipelineId} ${presence.status}
+            <ul class="nav justify-content-between">
+              <li class="nav-item">
+              #${presence.pipelineId} ${presence.status}
+              </li>
+              <li class="nav-item">
+              ${presence.timeAgo}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
