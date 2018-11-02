@@ -16,8 +16,7 @@ defmodule MonitorWeb.ApiController do
       [] -> conn
       ["Pipeline Hook"] ->
         MonitorWeb.Endpoint.broadcast! "room:lobby",
-          "new_msg",
-          %{body: pipeline_info(conn.params)}
+          "update_presence", pipeline_info(conn.params)
         conn
     end
   end

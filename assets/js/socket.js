@@ -3,7 +3,7 @@
 
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/web/endpoint.ex":
-import { Socket } from 'phoenix'
+import { Socket, Presence } from 'phoenix'
 
 let socket = new Socket('/socket', { params: { token: window.userToken } })
 
@@ -58,18 +58,43 @@ let channel = socket.channel('room:lobby', {})
 
 let messagesContainer = document.querySelector('#messages')
 
-function getPipelineInfo (body) {
-  let name = body.project.name
-  let pipelineId = body.object_attributes.id
-  let branch = body.object_attributes.ref
-  let state = body.object_attributes.status
-  let author = body.commit.author.name
+let presences = {}
+
+function getPipelineInfo (payload) {
+  let name = payload.project.name
+  let pipelineId = payload.object_attributes.id
+  let branch = payload.object_attributes.ref
+  let state = payload.object_attributes.status
+  let author = payload.commit.author.name
   return `${name} ${branch} ${pipelineId} ${author} ${state}`
 }
 
+function renderPipelines (presences) {
+  let response = '<ul>'
+  console.log(presences)
+
+  Presence.list(presences, (id, { metas: [first, ...rest] }) => {
+    response += `<li>${id} ${first.status}</li>`
+  })
+
+  response += '</ul>'
+
+  document.querySelector('#pipelines').innerHTML = response
+}
+
+channel.on('presence_state', state => {
+  presences = Presence.syncState(presences, state)
+  renderPipelines(presences)
+})
+
+channel.on('presence_diff', diff => {
+  presences = Presence.syncDiff(presences, diff)
+  renderPipelines(presences)
+})
+
 channel.on('new_msg', payload => {
   let messageItem = document.createElement('li')
-  messageItem.innerText = getPipelineInfo(payload.body)
+  messageItem.innerText = getPipelineInfo(payload)
   messagesContainer.appendChild(messageItem)
 })
 
