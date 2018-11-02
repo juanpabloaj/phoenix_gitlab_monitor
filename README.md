@@ -1,5 +1,9 @@
 # Phoenix Gitlab monitor
 
+Run with docker
+
+    docker run --rm --name  gitlab-monitor -p 0.0.0.0:80:4000 -d juanpabloaj/phoenix_gitlab_monitor:latest
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
