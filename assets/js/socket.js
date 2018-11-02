@@ -97,6 +97,7 @@ function renderPipelines (presences) {
   }
 
   pipelineList.innerHTML = orderedList
+    .slice(0, 16)
     .map(templates.pipelineCard)
     .join('')
 }
