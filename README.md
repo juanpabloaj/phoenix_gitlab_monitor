@@ -1,4 +1,4 @@
-# Monitor
+# Phoenix Gitlab monitor
 
 To start your Phoenix server:
 
