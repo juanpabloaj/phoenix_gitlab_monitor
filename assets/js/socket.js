@@ -69,17 +69,26 @@ function getPipelineInfo (payload) {
   return `${name} ${branch} ${pipelineId} ${author} ${state}`
 }
 
+let listBy = (id, { metas }) => {
+  return {
+    id: id,
+    status: metas[0].status,
+    online_at: metas[0].online_at
+  }
+}
+
 function renderPipelines (presences) {
-  let response = '<ul>'
-  console.log(presences)
-
-  Presence.list(presences, (id, { metas: [first, ...rest] }) => {
-    response += `<li>${id} ${first.status}</li>`
-  })
-
-  response += '</ul>'
-
-  document.querySelector('#pipelines').innerHTML = response
+  let pipelineList = document.querySelector('#pipelines')
+  pipelineList.innerHTML = Presence.list(presences, listBy)
+    .sort((a, b) => {
+      return new Date(parseInt(b.online_at)) - new Date(parseInt(a.online_at))
+    })
+    .map(presence => `
+      <li>
+        ${presence.id} ${presence.status}
+      </li>
+    `)
+    .join('')
 }
 
 channel.on('presence_state', state => {

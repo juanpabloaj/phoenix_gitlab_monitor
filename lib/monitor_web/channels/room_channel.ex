@@ -19,7 +19,11 @@ defmodule MonitorWeb.RoomChannel do
     status = payload.object_attributes["status"]
 
     {_, _} = Presence.track(socket, pipeline_id, %{})
-    Presence.update(socket, pipeline_id, %{status: status})
+    Presence.update(socket, pipeline_id, %{
+      status: status,
+      online_at: inspect(System.system_time(:millisecond))
+    })
+
     push socket, "new_msg", payload
     {:noreply, socket}
   end
