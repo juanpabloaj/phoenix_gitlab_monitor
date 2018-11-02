@@ -5,6 +5,7 @@
 // and connect at the socket path in "lib/web/endpoint.ex":
 import { Socket, Presence } from 'phoenix'
 import timeago from 'timeago.js'
+import * as templates from './templates.js'
 
 let socket = new Socket('/socket', { params: { token: window.userToken } })
 
@@ -86,30 +87,17 @@ let listBy = (id, { metas }) => {
 
 function renderPipelines (presences) {
   let pipelineList = document.querySelector('#pipelines')
-  pipelineList.innerHTML = Presence.list(presences, listBy)
+  let orderedList = Presence.list(presences, listBy)
     .sort((a, b) => {
       return b.online_at - a.online_at
     })
-    .map(presence => `
-      <div class="col-sm-4">
-        <div class="card text-white bg-success mb-3">
-          <div class="card-body">
-            <h5 class="card-title">${presence.projectName} (${presence.branch})</h5>
-            <p class="card-text">${presence.author}: ${presence.message}</p>
-          </div>
-          <div class="card-footer">
-            <ul class="nav justify-content-between">
-              <li class="nav-item">
-              #${presence.pipelineId} ${presence.status}
-              </li>
-              <li class="nav-item">
-              ${presence.timeAgo}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    `)
+
+  if (orderedList.length === 0) {
+    return
+  }
+
+  pipelineList.innerHTML = orderedList
+    .map(templates.pipelineCard)
     .join('')
 }
 

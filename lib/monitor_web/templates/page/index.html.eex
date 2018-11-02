@@ -1,7 +1,10 @@
 <div class="">
-  <h2><%= gettext "Welcome to %{name}!", name: "Phoenix monitor" %></h2>
 
   <div id="pipelines" class="row">
+    <div class="mx-auto">
+      <h2><%= gettext "Welcome to %{name}!", name: "Phoenix gitlab monitor" %></h2>
+      <p> ... waiting for new pipelines information ...</p>
+    </div>
   </div>
   <div id="messages"></div>
 </div>

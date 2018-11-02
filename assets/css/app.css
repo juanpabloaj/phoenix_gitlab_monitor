@@ -1,6 +1,7 @@
 /* This file is for your main application css. */
 
 body {
+  padding-top:20px;
   color: #fff;
   background: #212529;
 }
