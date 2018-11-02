@@ -1,6 +1,14 @@
+let statusClassTranslator = (status) => {
+  if (status === 'failed') {
+    status = 'danger'
+  }
+
+  return status
+}
+
 export let pipelineCard = (pipeline) => `
   <div class="col-sm-4">
-    <div class="card text-white bg-success mb-3">
+    <div class="card text-white bg-${statusClassTranslator(pipeline.status)} mb-3">
       <div class="card-body">
         <h5 class="card-title">${pipeline.projectName} (${pipeline.branch})</h5>
         <p class="card-text">${pipeline.author}: ${pipeline.message}</p>
