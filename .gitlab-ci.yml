@@ -1,0 +1,11 @@
+# This file is a template, and might need editing before it works on your project.
+image: bitwalker/alpine-elixir-phoenix:latest
+
+before_script:
+  - mix local.rebar --force
+  - mix local.hex --force
+  - mix deps.get
+
+mix:
+  script:
+  - mix test
