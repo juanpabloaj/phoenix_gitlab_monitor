@@ -1,5 +1,7 @@
 # Phoenix Gitlab monitor
 
+![gitlab_monitor](https://duaw26jehqd4r.cloudfront.net/items/0M142D3V023g1W2f2e0Y/Image%202018-11-03%20at%201.31.55%20p.m..png)
+
 ### Run
 
 With docker
