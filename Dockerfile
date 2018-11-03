@@ -23,4 +23,4 @@ RUN cd assets/ && \
 
 USER default
 
-CMD ["mix", "phx.server"]
+CMD ["elixir", "--sname", "gitlab-monitor", "-S", "mix", "phx.server"]
