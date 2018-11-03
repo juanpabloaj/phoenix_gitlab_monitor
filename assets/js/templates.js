@@ -6,6 +6,9 @@ let statusClassTranslator = (status) => {
     case 'running':
       status = 'primary'
       break
+    case 'canceled':
+      status = 'secondary'
+      break
   }
 
   return status
