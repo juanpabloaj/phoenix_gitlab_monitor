@@ -18,7 +18,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 ### Configure your repository
 
-In your gitlab reposity create a webhook: Settings -> Integrations -> Add webhook.
+In your gitlab repository create a webhook: Settings -> Integrations -> Add webhook.
 
 The url field is your host, complete it with
 
