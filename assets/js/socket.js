@@ -75,7 +75,7 @@ let listBy = (id, { metas }) => {
   let pipelineDate = new Date(parseInt(metas[0].online_at))
   return {
     online_at: pipelineDate,
-    timeAgo: timeago().format(pipelineDate),
+    dateString: pipelineDate.toISOString(),
     projectName: metas[0].name,
     pipelineId: metas[0].pipeline_id,
     branch: metas[0].branch,
@@ -100,6 +100,7 @@ function renderPipelines (presences) {
     .slice(0, 16)
     .map(templates.pipelineCard)
     .join('')
+  timeago().render(document.querySelectorAll('.rendered-by-timeago'));
 }
 
 channel.on('presence_state', state => {

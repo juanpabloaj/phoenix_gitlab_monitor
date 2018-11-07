@@ -26,8 +26,7 @@ export let pipelineCard = (pipeline) => `
           <li class="nav-item">
           #${pipeline.pipelineId} ${pipeline.status}
           </li>
-          <li class="nav-item">
-          ${pipeline.timeAgo}
+          <li class="nav-item rendered-by-timeago" datetime="${pipeline.dateString}">
           </li>
         </ul>
       </div>
