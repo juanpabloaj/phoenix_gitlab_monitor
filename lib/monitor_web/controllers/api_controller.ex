@@ -13,11 +13,12 @@ defmodule MonitorWeb.ApiController do
 
   def fetch_pipeline(conn, _) do
     case conn |> get_req_header("x-gitlab-event") do
-      [] -> conn
       ["Pipeline Hook"] ->
         MonitorWeb.Endpoint.broadcast! "room:lobby",
           "update_presence", pipeline_info(conn.params)
         conn
+      [] -> conn
+      [_] -> conn
     end
   end
 
