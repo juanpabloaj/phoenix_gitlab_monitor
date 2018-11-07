@@ -24,6 +24,8 @@ The url field is your host, complete it with
 
     http://yourhost:4000/api
 
+And in the checkbox select the pipeline events.
+
 Learn more about gitlab webhook gitlab documentation
 
 https://gitlab.com/help/user/project/integrations/webhooks
