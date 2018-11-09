@@ -72,6 +72,10 @@ function getPipelineInfo (payload) {
 }
 
 let listBy = (id, { metas }) => {
+  if (Object.keys(metas[0]).length <= 1) {
+    return {}
+  }
+
   let pipelineDate = new Date(parseInt(metas[0].online_at))
   return {
     online_at: pipelineDate,
@@ -88,6 +92,7 @@ let listBy = (id, { metas }) => {
 function renderPipelines (presences) {
   let pipelineList = document.querySelector('#pipelines')
   let orderedList = Presence.list(presences, listBy)
+    .filter(pipeline => pipeline.status !== undefined)
     .sort((a, b) => {
       return b.online_at - a.online_at
     })
