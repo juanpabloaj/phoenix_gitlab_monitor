@@ -101,11 +101,19 @@ function renderPipelines (presences) {
     return
   }
 
+  document.title = 'success'
+
   pipelineList.innerHTML = orderedList
     .slice(0, 16)
+    .map((pipeline) => {
+      if (pipeline.status === 'failed') {
+        document.title = 'failed!'
+      }
+      return pipeline
+    })
     .map(templates.pipelineCard)
     .join('')
-  timeago().render(document.querySelectorAll('.rendered-by-timeago'));
+  timeago().render(document.querySelectorAll('.rendered-by-timeago'))
 }
 
 channel.on('presence_state', state => {
