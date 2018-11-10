@@ -36,7 +36,9 @@ defmodule MonitorWeb.ApiController do
         put_pipeline_info(conn.params)
 
         MonitorWeb.Endpoint.broadcast! "room:lobby",
-          "update_presence", %{}
+          "update_pipelines", %{
+            "pipelines": Monitor.PipelineCache.get_all
+          }
         conn
       [] -> conn
       [_] -> conn

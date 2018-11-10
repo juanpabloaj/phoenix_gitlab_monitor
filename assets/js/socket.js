@@ -3,7 +3,7 @@
 
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/web/endpoint.ex":
-import { Socket, Presence } from 'phoenix'
+import { Socket } from 'phoenix'
 import timeago from 'timeago.js'
 import * as templates from './templates.js'
 
