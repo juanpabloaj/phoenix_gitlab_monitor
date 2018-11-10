@@ -3,6 +3,14 @@ defmodule MonitorWeb.ApiController do
 
   plug :fetch_pipeline
 
+  def accept_branch?(branch, branches) do
+    case branches do
+      [] -> true
+      nil -> true
+      _ -> Enum.member?(branches, branch)
+    end
+  end
+
   def put_pipeline_info(params) do
     payload = %{
       object_attributes: params["object_attributes"],
@@ -19,7 +27,7 @@ defmodule MonitorWeb.ApiController do
     message = payload.commit["message"]
     project_branch = "#{project_id}-#{branch}"
 
-    if Enum.member?(params["branches"] || [], branch) do
+    if accept_branch?(branch, params["branches"]) do
       Monitor.PipelineCache.put project_branch, %{
         name: name,
         pipeline_id: pipeline_id,
