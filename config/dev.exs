@@ -45,7 +45,7 @@ config :monitor, MonitorWeb.Endpoint,
 #config :logger, :console, format: "[$level] $message\n"
 config :logger, :console,
   format: "[$level] $metadata$message\n",
-  metadata: [:request_id]
+  metadata: [:pid, :request_id]
 
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
