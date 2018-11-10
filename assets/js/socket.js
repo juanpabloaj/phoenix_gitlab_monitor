@@ -58,40 +58,28 @@ socket.connect()
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel('room:lobby', {})
 
-let messagesContainer = document.querySelector('#messages')
-
-let presences = {}
-
-function getPipelineInfo (payload) {
-  let name = payload.project.name
-  let pipelineId = payload.object_attributes.id
-  let branch = payload.object_attributes.ref
-  let state = payload.object_attributes.status
-  let author = payload.commit.author.name
-  return `${name} ${branch} ${pipelineId} ${author} ${state}`
-}
-
-let listBy = (id, { metas }) => {
-  if (Object.keys(metas[0]).length <= 1) {
+let pipelineFormat = (pipeline) => {
+  if (Object.keys(pipeline).length <= 1) {
     return {}
   }
 
-  let pipelineDate = new Date(parseInt(metas[0].online_at))
+  let pipelineDate = new Date(parseInt(pipeline.online_at))
   return {
     online_at: pipelineDate,
     dateString: pipelineDate.toISOString(),
-    projectName: metas[0].name,
-    pipelineId: metas[0].pipeline_id,
-    branch: metas[0].branch,
-    author: metas[0].author,
-    commitTitle: metas[0].message.split('\n', 1),
-    status: metas[0].status
+    projectName: pipeline.name,
+    pipelineId: pipeline.pipeline_id,
+    branch: pipeline.branch,
+    author: pipeline.author,
+    commitTitle: pipeline.message.split('\n', 1),
+    status: pipeline.status
   }
 }
 
-function renderPipelines (presences) {
+function renderPipelines (pipelines) {
   let pipelineList = document.querySelector('#pipelines')
-  let orderedList = Presence.list(presences, listBy)
+  let orderedList = pipelines
+    .map(pipelineFormat)
     .filter(pipeline => pipeline.status !== undefined)
     .sort((a, b) => {
       return b.online_at - a.online_at
@@ -116,20 +104,8 @@ function renderPipelines (presences) {
   timeago().render(document.querySelectorAll('.rendered-by-timeago'))
 }
 
-channel.on('presence_state', state => {
-  presences = Presence.syncState(presences, state)
-  renderPipelines(presences)
-})
-
-channel.on('presence_diff', diff => {
-  presences = Presence.syncDiff(presences, diff)
-  renderPipelines(presences)
-})
-
-channel.on('new_msg', payload => {
-  let messageItem = document.createElement('li')
-  messageItem.innerText = getPipelineInfo(payload)
-  // messagesContainer.appendChild(messageItem)
+channel.on('update_pipelines', payload => {
+  renderPipelines(payload.pipelines)
 })
 
 channel.join()

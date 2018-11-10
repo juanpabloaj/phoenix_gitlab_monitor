@@ -10,32 +10,17 @@ defmodule MonitorWeb.RoomChannel do
   end
 
   def handle_info(:after_join, socket) do
-    push socket, "presence_state", Presence.list(socket)
+    push socket, "update_pipelines", %{
+      "pipelines": Monitor.PipelineCache.get_all
+    }
     {:noreply, socket}
   end
 
-  def handle_out("update_presence", payload, socket) do
-    project_id = payload.project["id"]
-    name = payload.project["name"]
-    pipeline_id = payload.object_attributes["id"]
-    branch = payload.object_attributes["ref"]
-    status = payload.object_attributes["status"]
-    author = payload.commit["author"]["name"]
-    message = payload.commit["message"]
-    project_branch = "#{project_id}-#{branch}"
+  def handle_out("update_presence", _payload, socket) do
 
-    {_, _} = Presence.track(socket, project_branch, %{})
-    Presence.update(socket, project_branch, %{
-      name: name,
-      pipeline_id: pipeline_id,
-      branch: branch,
-      author: author,
-      message: message,
-      status: status,
-      online_at: inspect(System.system_time(:millisecond))
-    })
-
-    push socket, "new_msg", payload
+    push socket, "update_pipelines", %{
+      "pipelines": Monitor.PipelineCache.get_all
+    }
     {:noreply, socket}
   end
 end
