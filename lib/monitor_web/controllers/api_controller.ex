@@ -19,15 +19,17 @@ defmodule MonitorWeb.ApiController do
     message = payload.commit["message"]
     project_branch = "#{project_id}-#{branch}"
 
-    Monitor.PipelineCache.put project_branch, %{
-      name: name,
-      pipeline_id: pipeline_id,
-      branch: branch,
-      author: author,
-      message: message,
-      status: status,
-      online_at: inspect(System.system_time(:millisecond))
-    }
+    if Enum.member?(params["branches"] || [], branch) do
+      Monitor.PipelineCache.put project_branch, %{
+        name: name,
+        pipeline_id: pipeline_id,
+        branch: branch,
+        author: author,
+        message: message,
+        status: status,
+        online_at: inspect(System.system_time(:millisecond))
+      }
+    end
   end
 
   def fetch_pipeline(conn, _) do

@@ -28,6 +28,10 @@ And in the checkbox select the pipeline events.
 
 Learn more about gitlab webhook gitlab documentation
 
+### To only accept some branches
+
+    http://localhost:4000/api?branches[]=master&branches[]=develop
+
 https://gitlab.com/help/user/project/integrations/webhooks
 
 ## Learn more about Phoenix Framework
