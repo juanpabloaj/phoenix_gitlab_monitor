@@ -84,7 +84,7 @@ let listBy = (id, { metas }) => {
     pipelineId: metas[0].pipeline_id,
     branch: metas[0].branch,
     author: metas[0].author,
-    message: metas[0].message,
+    commitTitle: metas[0].message.split('\n', 1),
     status: metas[0].status
   }
 }

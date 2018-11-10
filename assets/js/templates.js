@@ -19,7 +19,7 @@ export let pipelineCard = (pipeline) => `
     <div class="card text-white bg-${statusClassTranslator(pipeline.status)} mb-3">
       <div class="card-body">
         <h5 class="card-title">${pipeline.projectName} (${pipeline.branch})</h5>
-        <p class="card-text">${pipeline.author}: ${pipeline.message}</p>
+        <p class="card-text">${pipeline.author}: ${pipeline.commitTitle}</p>
       </div>
       <div class="card-footer">
         <ul class="nav justify-content-between">
