@@ -1,17 +1,21 @@
 let statusClassTranslator = (status) => {
+  let className = 'secondary'
   switch (status) {
+    case 'success':
+      className = status
+      break
     case 'failed':
-      status = 'danger'
+      className = 'danger'
       break
     case 'running':
-      status = 'primary'
+      className = 'primary'
       break
     case 'canceled':
-      status = 'secondary'
+      className = 'secondary'
       break
   }
 
-  return status
+  return className
 }
 
 export let pipelineCard = (pipeline) => `
