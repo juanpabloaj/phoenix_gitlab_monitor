@@ -16,6 +16,12 @@ Or to start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+Send a pipeline hook with curl
+
+    curl -H "X-Gitlab-Event: Pipeline Hook" \
+        -H "content-type:application/json" -d @test/fixtures/pipeline_success.json \
+        "http://localhost:4000/api"
+
 ### Configure your repository
 
 In your gitlab repository create a webhook: Settings -> Integrations -> Add webhook.
