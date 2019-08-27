@@ -15,7 +15,8 @@ defmodule MonitorWeb.ApiController do
     payload = %{
       object_attributes: params["object_attributes"],
       project: params["project"],
-      commit: params["commit"]
+      commit: params["commit"],
+      user: params["user"]
     }
 
     project_id = payload.project["id"]
@@ -24,6 +25,7 @@ defmodule MonitorWeb.ApiController do
     branch = payload.object_attributes["ref"]
     status = payload.object_attributes["status"]
     author = payload.commit["author"]["name"]
+    username = payload.user["username"]
     message = payload.commit["message"]
     project_branch = "#{project_id}-#{branch}"
 
@@ -33,6 +35,7 @@ defmodule MonitorWeb.ApiController do
         pipeline_id: pipeline_id,
         branch: branch,
         author: author,
+        username: username,
         message: message,
         status: status,
         online_at: inspect(System.system_time(:millisecond))
