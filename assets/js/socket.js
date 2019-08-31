@@ -71,6 +71,7 @@ let pipelineFormat = (pipeline) => {
     pipelineId: pipeline.pipeline_id,
     branch: pipeline.branch,
     author: pipeline.author,
+    username: pipeline.username,
     commitTitle: pipeline.message.split('\n', 1),
     status: pipeline.status
   }
