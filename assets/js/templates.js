@@ -25,7 +25,7 @@ export let pipelineCard = (pipeline) => `
         <h5 class="card-title">${pipeline.projectName} (${pipeline.branch})</h5>
         <p class="card-text">
           ${pipeline.author}: ${pipeline.commitTitle}<br>
-          triggered by: ${pipeline.username}
+          ${pipeline.username ? `triggered by: ${pipeline.username}`: ``}
         </p>
       </div>
       <div class="card-footer">
