@@ -1,6 +1,7 @@
 defmodule MonitorWeb.ApiController do
   use MonitorWeb, :controller
 
+  plug :validate_token
   plug :fetch_pipeline
 
   def accept_branch?(branch, branches) do
@@ -50,14 +51,25 @@ defmodule MonitorWeb.ApiController do
 
         MonitorWeb.Endpoint.broadcast! "room:lobby",
           "update_pipelines", %{
-            "pipelines": Monitor.PipelineCache.get_all
+            pipelines: Monitor.PipelineCache.get_all
           }
         conn
       [] -> conn
       [_] -> conn
     end
   end
-
+  def validate_token(conn, _) do
+    token = MonitorWeb.Endpoint.config(:token)
+    header_token =  conn |> get_req_header("x-gitlab-token") 
+    if token == "" or [token] == header_token do
+      conn
+    else
+      conn
+        |> put_status(403) 
+        |> send_resp(403, "Unauthorized")
+        |> halt
+    end
+  end
   def index(conn, _params) do
     json conn, %{message: "info received ok"}
   end
