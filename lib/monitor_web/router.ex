@@ -13,14 +13,14 @@ defmodule MonitorWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", MonitorWeb do
+  scope "/gmon", MonitorWeb do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
-  scope "/api", MonitorWeb do
+  scope "/gmon/api", MonitorWeb do
     pipe_through :api
 
     post "/", ApiController, :index

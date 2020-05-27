@@ -7,7 +7,7 @@ use Mix.Config
 
 # Configures the endpoint
 config :monitor, MonitorWeb.Endpoint,
-  url: [host: "localhost"],
+  url: [host: "localhost", path: "/gmon"],
   secret_key_base: "9lZ0CBL/MalRA1I/r0OvWXuFfNpguMrZQJ3qz6/iUKxqcMMzZKckYAz+rAcTHAIP",
   render_errors: [view: MonitorWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Monitor.PubSub,

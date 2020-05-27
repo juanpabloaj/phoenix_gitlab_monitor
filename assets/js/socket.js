@@ -7,7 +7,7 @@ import { Socket } from 'phoenix'
 import timeago from 'timeago.js'
 import * as templates from './templates.js'
 
-let socket = new Socket('/socket', { params: { token: window.userToken } })
+let socket = new Socket('/gmon/socket', { params: { token: window.userToken } })
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
