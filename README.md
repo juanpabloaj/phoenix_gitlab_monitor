@@ -8,6 +8,10 @@ With docker
 
     docker run --rm --name  gitlab-monitor -p 0.0.0.0:4000:4000 -d juanpabloaj/phoenix_gitlab_monitor:latest
 
+Build image
+
+    docker build -t juanpabloaj/phoenix_gitlab_monitor:latest .
+
 Or to start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
