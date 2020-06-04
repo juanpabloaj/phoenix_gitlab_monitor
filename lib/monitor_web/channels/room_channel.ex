@@ -8,7 +8,7 @@ defmodule MonitorWeb.RoomChannel do
 
   def handle_info(:after_join, socket) do
     push socket, "update_pipelines", %{
-      "pipelines": Monitor.PipelineCache.get_all
+      pipelines: Monitor.PipelineCache.get_all
     }
     {:noreply, socket}
   end
